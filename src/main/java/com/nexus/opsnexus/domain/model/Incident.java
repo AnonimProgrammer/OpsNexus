@@ -1,9 +1,6 @@
-package com.nexus.opsnexus.domain.model.entity;
+package com.nexus.opsnexus.domain.model;
 
 import com.nexus.opsnexus.domain.exception.InvalidIncidentStateException;
-import com.nexus.opsnexus.domain.model.IncidentStatus;
-import com.nexus.opsnexus.domain.model.IncidentType;
-import com.nexus.opsnexus.domain.model.Severity;
 import lombok.Getter;
 
 import java.util.Objects;
@@ -32,16 +29,25 @@ public class Incident {
     }
 
     public static Incident open(
-            Long id,
             IncidentType type,
             Severity severity,
             String reason
     ) {
-        return new Incident(id, type, severity, reason, IncidentStatus.OPEN);
+        return new Incident(null, type, severity, reason, IncidentStatus.OPEN);
+    }
+
+    public static Incident reconstitute(
+            Long id,
+            IncidentType type,
+            Severity severity,
+            String reason,
+            IncidentStatus status
+    ) {
+        return new Incident(id, type, severity, reason, status);
     }
 
     public void acknowledge() {
-        if (isOpen()) {
+        if (!isOpen()) {
             throw new InvalidIncidentStateException(
                     "Only OPEN incidents can be acknowledged."
             );
@@ -50,7 +56,7 @@ public class Incident {
     }
 
     public void resolve() {
-        if (isAcknowledged()) {
+        if (!isAcknowledged()) {
             throw new InvalidIncidentStateException(
                     "Only ACKNOWLEDGED incidents can be resolved."
             );

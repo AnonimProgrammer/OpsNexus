@@ -2,5 +2,21 @@ spring:
   application:
     name: ops-nexus
 
+  datasource:
+    url: jdbc:postgresql://localhost:5450/ops_nexus_db
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    default-schema: public
+    enabled: true
+
 server:
   port: 8000

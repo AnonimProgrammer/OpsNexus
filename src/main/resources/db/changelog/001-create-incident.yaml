@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-incident
+      author: omarismayilov
+      changes:
+            - createTable:
+                tableName: incidents
+                columns:
+                - column:
+                    name: id
+                    type: BIGINT
+                    autoIncrement: true
+                    constraints:
+                        primaryKey: true
+                        nullable: false
+                - column:
+                    name: type
+                    type: VARCHAR(50)
+                    constraints:
+                        nullable: false
+                - column:
+                    name: severity
+                    type: VARCHAR(50)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: reason
+                    type: TEXT
+                    constraints:
+                        nullable: false
+                - column:
+                    name: status
+                    type: VARCHAR(50)
+                    constraints:
+                        nullable: false
